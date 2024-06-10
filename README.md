@@ -50,7 +50,7 @@ docker ps
 
 4. Accessing the Services via web
 
- http://<server-IP>:<defined-port>
+ http://-server-IP-:-defined-port-
  
  (Login into Grafana use default login and pass: admin/admin)
 
