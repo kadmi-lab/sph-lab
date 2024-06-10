@@ -14,16 +14,10 @@ This project sets up a monitoring stack using Docker Compose, including the foll
 
 - **Docker** >= 26.0.0: [Docker installation](https://docs.docker.com/engine/install/ubuntu/)
 - **Docker Compose** >= 2.26.0: [Docker Compose installation](https://docs.docker.com/compose/install/linux/)
-<<<<<<< HEAD
-
-=======
->>>>>>> 3a17f9e (Add updated tar file)
-(project can be installed on any platform that supports Docker and Docker Compose)
 
 ## Project tree
 
 sph-lab/
-<<<<<<< HEAD
 
 ├── docker-compose.yml
 
@@ -38,15 +32,7 @@ sph-lab/
 └── blackbox/
 
 │ └── blackbox.yml
-=======
-├── docker-compose.yml
-├── grafana/
-│ └── provisioning/
-├── prometheus/
-│ └── prometheus.yml
-└── blackbox/
-  └── blackbox.yml
->>>>>>> 3a17f9e (Add updated tar file)
+
 
 ## Running the Project
 
