@@ -1,0 +1,90 @@
+services:
+  http-echo:
+    image: hashicorp/http-echo:1.0.0
+    container_name: http-echo
+    networks:
+      - monitoring
+    ports:
+      - 12000:5678
+    restart: unless-stopped
+
+
+  grafana:
+    image: grafana/grafana-oss:10.2.4
+    container_name: grafana
+    networks:
+      - monitoring
+    ports:
+      - 11000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana:/etc/grafana/provisioning
+    restart: unless-stopped
+    depends_on:
+      - prometheus
+
+  prometheus:
+    image: prom/prometheus:v2.45.0
+    container_name: prometheus
+    networks:
+      - monitoring
+    ports:
+      - 11010:9090
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.retention.time=90d'
+      - '--storage.tsdb.path=/prometheus'
+    restart: unless-stopped
+
+  node-exporter: 
+    image: prom/node-exporter:latest 
+    container_name: node-exporter
+    networks: 
+      - monitoring
+    volumes: 
+      - /proc:/host/proc:ro 
+      - /sys:/host/sys:ro 
+      - /:/rootfs:ro 
+    command: 
+      - '--path.procfs=/host/proc' 
+      - '--path.rootfs=/rootfs' 
+      - '--path.sysfs=/host/sys' 
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)' 
+    ports: 
+      - 9100:9100 
+    restart: unless-stopped
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.49.1
+    container_name: cadvisor
+    networks:
+      - monitoring
+    ports:
+      - 8080:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    restart: unless-stopped
+
+  blackbox_exporter:
+    image: quay.io/prometheus/blackbox-exporter:v0.25.0
+    container_name: blackbox
+    networks:
+      - monitoring
+    ports:
+      - 9115:9115
+    volumes:
+      - ./blackbox/blackbox.yml:/etc/blackbox_exporter/config.yml
+    restart: unless-stopped
+
+networks:
+  monitoring:
+
+volumes:
+  grafana_data:
+  prometheus_data:
