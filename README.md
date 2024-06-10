@@ -25,7 +25,7 @@ sph-lab/
 
 │ └── dashboards/dashboard.yml and dashboards
 
-  └── datasources/datasources.yml
+│ └── datasources/datasources.yml
 
 ├── prometheus/
 
