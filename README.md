@@ -23,7 +23,9 @@ sph-lab/
 
 ├── grafana/
 
-│ └── provisioning/
+│ └── dashboards/dashboard.yml and dashboards
+
+  └── datasources/datasources.yml
 
 ├── prometheus/
 
